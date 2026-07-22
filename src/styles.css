@@ -57,7 +57,7 @@ nav {
 
 .fixed-spiral {
   position: fixed;
-  z-index: 0;
+  z-index: 2;
   inset: 0;
   display: grid;
   place-items: center;
@@ -66,7 +66,7 @@ nav {
 
 .spiral {
   position: relative;
-  width: min(66vw, 650px);
+  width: min(78vw, 720px);
   aspect-ratio: 1;
 }
 
@@ -80,17 +80,18 @@ nav {
 
 .spiral__line path {
   fill: none;
-  stroke: #181712;
-  stroke-width: 2.4;
+  stroke: #12110d;
+  stroke-width: 2.8;
   stroke-linecap: round;
-  opacity: 0.92;
+  stroke-linejoin: round;
+  opacity: 0.95;
   vector-effect: non-scaling-stroke;
-  stroke-dasharray: 1100;
-  stroke-dashoffset: 1100;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
 }
 
 .spiral--visible .spiral__line path {
-  animation: drawSpiral 2.4s cubic-bezier(0.76, 0, 0.24, 1) 0.25s forwards;
+  animation: drawSpiral 3s cubic-bezier(0.76, 0, 0.24, 1) 0.15s forwards;
 }
 
 .spiral__letters {
@@ -103,11 +104,12 @@ nav {
   top: var(--y);
   left: var(--x);
   width: 1ch;
-  font-size: clamp(0.46rem, 0.7vw, 0.68rem);
+  font-size: clamp(0.58rem, 1.05vw, 0.82rem);
   line-height: 1;
   text-align: center;
+  color: #12110d;
   opacity: 0;
-  transform: translate(-50%, -50%) rotate(var(--angle)) scale(0.1);
+  transform: translate(-50%, -50%) rotate(var(--angle)) scale(0.15);
   transform-origin: 50% 50%;
 }
 
@@ -118,7 +120,7 @@ nav {
 main,
 footer {
   position: relative;
-  z-index: 1;
+  z-index: 3;
 }
 
 .hero {
@@ -129,6 +131,12 @@ footer {
   justify-content: flex-end;
   padding: 100px 24px 8vh;
   text-align: center;
+  background: transparent;
+  pointer-events: none;
+}
+
+.hero > * {
+  pointer-events: auto;
 }
 
 .eyebrow {
@@ -308,6 +316,10 @@ footer {
   to {
     stroke-dashoffset: 0;
   }
+}
+
+.spiral:not(.spiral--visible) .spiral__line path {
+  stroke-dashoffset: 1;
 }
 
 @keyframes growLetter {

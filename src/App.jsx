@@ -1,25 +1,12 @@
 import { useEffect, useRef, useState } from 'react'
+import { buildSpiralLetters, buildSpiralPath, SPIRAL_COPY } from './spiral'
 
-const spiralCopy =
-  'lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua'
+const spiralPath = buildSpiralPath()
 
 function Spiral({ repeated = false }) {
   const spiralRef = useRef(null)
   const [isVisible, setIsVisible] = useState(!repeated)
-  const characters = [...spiralCopy]
-  const points = characters.map((character, index) => {
-    const progress = index / Math.max(characters.length - 1, 1)
-    const angle = index * 0.29 - Math.PI / 2
-    const radius = 8 + progress * 158
-
-    return {
-      character,
-      x: 50 + Math.cos(angle) * (radius / 3.9),
-      y: 50 + Math.sin(angle) * (radius / 3.9),
-      angle: (angle * 180) / Math.PI + 90,
-      delay: `${index * 42}ms`,
-    }
-  })
+  const points = buildSpiralLetters()
 
   useEffect(() => {
     if (!repeated || !spiralRef.current) return undefined
@@ -31,7 +18,7 @@ function Spiral({ repeated = false }) {
           observer.disconnect()
         }
       },
-      { threshold: 0.25 },
+      { threshold: 0.2 },
     )
 
     observer.observe(spiralRef.current)
@@ -42,7 +29,7 @@ function Spiral({ repeated = false }) {
     <div
       ref={spiralRef}
       className={`spiral ${repeated ? 'spiral--repeated' : ''} ${isVisible ? 'spiral--visible' : ''}`}
-      aria-label={spiralCopy}
+      aria-label={SPIRAL_COPY}
       role="img"
     >
       <svg
@@ -50,7 +37,7 @@ function Spiral({ repeated = false }) {
         viewBox="0 0 400 400"
         aria-hidden="true"
       >
-        <path d="M200 200c0-9 7-16 16-16 18 0 31 15 31 33 0 28-23 51-52 51-40 0-72-32-72-72 0-52 42-94 94-94 65 0 117 53 117 118 0 78-63 141-141 141-91 0-165-74-165-165" />
+        <path d={spiralPath} pathLength="1" />
       </svg>
 
       <span className="spiral__letters" aria-hidden="true">

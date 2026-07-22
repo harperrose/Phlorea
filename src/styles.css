@@ -51,7 +51,7 @@ body {
   text-align: center;
   color: #12110d;
   opacity: 0;
-  transform: translate(-50%, -50%) rotate(var(--angle));
+  transform: translate(-50%, -50%);
   transform-origin: 50% 50%;
   animation: revealLetter 1ms linear var(--delay) forwards;
 }

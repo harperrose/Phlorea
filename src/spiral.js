@@ -1,7 +1,7 @@
-export const SPIRAL_COPY = `1 the celebration of culture, nature and fantasy through craft
-2 the study of adornment; as it relates to the space we inhabit (e.g., body or home)
-3 the rejection of minimalist design through lavish ornamentation
-4 the desire to highlight the beauty, synchronicity, and wonder of divine creation`
+export const SPIRAL_COPY = Array.from(
+  { length: 32 },
+  () => 'phlorea',
+).join(' ')
 
 const CHAR_DELAY_MS = 100
 const VIEWBOX = 400
@@ -21,7 +21,7 @@ export function buildSpiralWords(copy = SPIRAL_COPY) {
     }
 
     const radius = Math.max(b * theta, 1)
-    const x = VIEWBOX / 2 + Math.cos(theta - Math.PI / 2) * radius
+    const x = VIEWBOX / 2 - Math.cos(theta - Math.PI / 2) * radius
     const y = VIEWBOX / 2 + Math.sin(theta - Math.PI / 2) * radius
 
     const result = {

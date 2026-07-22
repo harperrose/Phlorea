@@ -143,9 +143,9 @@ body {
 .image-section {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  width: calc(100% - 48px);
+  width: 100%;
   min-height: min(62vw, 720px);
-  margin: 0 auto 24px;
+  margin: 0 0 24px;
   overflow: hidden;
 }
 
@@ -222,7 +222,7 @@ footer a:hover {
   }
 
   .image-section {
-    width: calc(100% - 32px);
+    width: 100%;
   }
 
   .image-panel {

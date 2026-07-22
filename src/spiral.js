@@ -1,45 +1,37 @@
-export const SPIRAL_COPY =
-  'lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua'
+export const SPIRAL_COPY = `1 the celebration of culture, nature and fantasy through craft
+2 the study of adornment; as it relates to the space we inhabit (e.g., body or home)
+3 the rejection of minimalist design through lavish ornamentation
+4 the desire to highlight the beauty, synchronicity, and wonder of divine creation`
 
-export function buildSpiralPath({
-  cx = 200,
-  cy = 200,
-  turns = 4.5,
-  spacing = 14,
-  points = 360,
-} = {}) {
-  const maxAngle = turns * Math.PI * 2
-  let path = ''
-
-  for (let index = 0; index <= points; index += 1) {
-    const progress = index / points
-    const angle = progress * maxAngle - Math.PI / 2
-    const radius = spacing * progress * turns * 1.55
-    const x = cx + Math.cos(angle) * radius
-    const y = cy + Math.sin(angle) * radius
-    path += `${index === 0 ? 'M' : 'L'} ${x.toFixed(2)} ${y.toFixed(2)} `
-  }
-
-  return path.trim()
-}
+const CHAR_DELAY_MS = 1000
+const VIEWBOX = 400
 
 export function buildSpiralLetters(copy = SPIRAL_COPY) {
-  const characters = [...copy]
-  const turns = 4.5
-  const spacing = 14
-  const maxAngle = turns * Math.PI * 2
+  const characters = [...copy.replace(/\n+/g, ' ')]
+  const spacing = 6.2
+  const b = 0.42
+  let theta = 0
+  let arc = 0
 
   return characters.map((character, index) => {
-    const progress = index / Math.max(characters.length - 1, 1)
-    const angle = progress * maxAngle - Math.PI / 2
-    const radius = spacing * progress * turns * 1.55
+    if (index > 0) {
+      const radius = Math.max(b * theta, 1)
+      const step = spacing / Math.hypot(radius, b)
+      theta += step
+      arc += spacing
+    }
+
+    const radius = Math.max(b * theta, 1)
+    const x = VIEWBOX / 2 + Math.cos(theta - Math.PI / 2) * radius
+    const y = VIEWBOX / 2 + Math.sin(theta - Math.PI / 2) * radius
+    const tangent = theta + Math.PI / 2
 
     return {
       character,
-      x: 50 + (Math.cos(angle) * radius * 100) / 400,
-      y: 50 + (Math.sin(angle) * radius * 100) / 400,
-      angle: (angle * 180) / Math.PI + 90,
-      delay: `${index * 38}ms`,
+      x: (x / VIEWBOX) * 100,
+      y: (y / VIEWBOX) * 100,
+      angle: (tangent * 180) / Math.PI,
+      delay: `${(index + 1) * CHAR_DELAY_MS}ms`,
     }
   })
 }

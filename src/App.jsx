@@ -1,10 +1,21 @@
+import { useEffect, useState } from 'react'
 import { buildSpiralLetters, SPIRAL_COPY } from './spiral'
 
 function Spiral() {
   const points = buildSpiralLetters()
+  const [isAnimating, setIsAnimating] = useState(false)
+
+  useEffect(() => {
+    const frame = requestAnimationFrame(() => setIsAnimating(true))
+    return () => cancelAnimationFrame(frame)
+  }, [])
 
   return (
-    <div className="spiral" aria-label={SPIRAL_COPY} role="img">
+    <div
+      className={`spiral ${isAnimating ? 'spiral--is-animating' : ''}`}
+      aria-label={SPIRAL_COPY}
+      role="img"
+    >
       <span className="spiral__letters" aria-hidden="true">
         {points.map(({ character, x, y, angle, delay }, index) => (
           <span

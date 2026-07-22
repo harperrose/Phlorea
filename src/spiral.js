@@ -3,13 +3,13 @@ export const SPIRAL_COPY = `1 the celebration of culture, nature and fantasy thr
 3 the rejection of minimalist design through lavish ornamentation
 4 the desire to highlight the beauty, synchronicity, and wonder of divine creation`
 
-const CHAR_DELAY_MS = 1000
+const CHAR_DELAY_MS = 100
 const VIEWBOX = 400
 
 export function buildSpiralLetters(copy = SPIRAL_COPY) {
   const characters = [...copy.replace(/\n+/g, ' ')]
-  const spacing = 6.2
-  const b = 0.42
+  const spacing = 3.1
+  const b = 0.84
   let theta = 0
   let arc = 0
 
